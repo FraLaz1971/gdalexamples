@@ -1,0 +1,31 @@
+GDAL_HOME = C:\gdal-2
+LDFLAGS = -L$(GDAL_HOME)\lib
+LIBS = -lgdal
+CPPFLAGS = -Iinclude
+CXXFLAGS =
+CC  = gcc
+CXX = g++
+LD  = g++
+RM  = rm -f
+MV = mv
+CP = cp
+
+EEXT =
+OEXT = .o
+TARGET = ex1
+
+.PHONY: clean distclean all
+
+all: $(TARGET)$(EEXT)
+
+$(TARGET)$(OEXT): $(TARGET).cpp
+	$(CXX) -c $< $(CPPFLAGS) -o $@
+
+$(TARGET)$(EEXT): $(TARGET)$(OEXT)
+	$(LD)  $< -o $@  $(LDFLAGS) $(LIBS)
+
+clean:
+	$(RM) $(TARGET).o
+
+distclean: clean
+	$(RM) $(TARGET) test.tif

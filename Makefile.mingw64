@@ -1,0 +1,30 @@
+GDAL_HOME = C:\gdal-2
+LDFLAGS = -L$(GDAL_HOME)\lib
+LIBS = -lgdal
+CPPFLAGS = -Iinclude
+CXXFLAGS =
+CC  = x86_64-w64-mingw32-gcc
+CXX = x86_64-w64-mingw32-g++
+LD  = x86_64-w64-mingw32-g++
+RM  = del /F /Q 
+MV = move /Y
+CP = copy /Y /B
+EEXT = .exe
+OEXT = .o
+TARGET = ex1
+
+.PHONY: clean distclean all
+
+all: $(TARGET)$(EEXT)
+
+$(TARGET)$(OEXT): $(TARGET).cpp
+	$(CXX) -c $< $(CPPFLAGS) -o $@
+
+$(TARGET)$(EEXT): $(TARGET)$(OEXT)
+	$(LD)  $< -o $@  $(LDFLAGS) $(LIBS)
+
+clean:
+	$(RM) $(TARGET)$(OEXT)
+
+distclean: clean
+	$(RM) $(TARGET)$(EEXT) test.tif
